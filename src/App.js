@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+
+const GRID_SIZE = 50;
 
 function App() {
+  const grid = Array.from(
+    { length: GRID_SIZE },
+    () => Array.from({ length: GRID_SIZE }, () => 0)
+  );
+
+  const markup = grid.map((element, rowIndex) => Array.isArray(element) ?
+    (<div className='row' key={rowIndex}>
+      {
+        element.map(
+          (el, elementIndex) =>
+            <div
+              className='square'
+              key={`${rowIndex}-${elementIndex}`}
+              id={`${rowIndex}-${elementIndex}`}
+            >
+              {el}
+            </div>
+        )
+      }
+    </div>)  : '');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='wrapper'>
+      { markup }
     </div>
   );
 }

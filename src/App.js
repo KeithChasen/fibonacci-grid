@@ -12,11 +12,17 @@ function App() {
   const clickHandler = e => {
     const [rowIndex, elementIndex] = e.target.id.split('-');
 
-    const updatedGrid = [
+    let updatedGrid = [
       ...grid
     ];
 
-    updatedGrid[rowIndex] = grid[rowIndex].map(element => element + 1);
+    const updatedRow = grid[rowIndex].map((element, index) => index !== elementIndex && element + 1);
+
+    updatedGrid.forEach(item => {
+      item[elementIndex] = item[elementIndex] + 1
+    });
+
+    updatedGrid[rowIndex] = updatedRow;
 
     setGrid(updatedGrid);
   };

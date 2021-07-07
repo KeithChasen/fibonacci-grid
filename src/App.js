@@ -43,6 +43,7 @@ function App() {
               key={`${rowIndex}-${elementIndex}`}
               id={`${rowIndex}-${elementIndex}`}
               onClick={clickHandler}
+              style={el > 0 ? { color: 'black' } : { color: 'white' }}
             >
               {el}
             </div>

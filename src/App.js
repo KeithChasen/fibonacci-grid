@@ -10,6 +10,12 @@ function App() {
   const [grid, setGrid] = useState(initialGrid);
 
   const clickHandler = e => {
+    e.target.style.background = "yellow";
+
+    setTimeout(() => {
+      e.target.style.background = "white"
+    }, 1000);
+
     const [rowIndex, elementIndex] = e.target.id.split('-');
 
     let updatedGrid = [

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { checkFibonacci } from "./fibonacci";
 
 const GRID_SIZE = 50;
 
@@ -8,8 +9,28 @@ function App() {
     () => Array.from({ length: GRID_SIZE }, () => 0)
   );
   const [grid, setGrid] = useState(initialGrid);
+  const [itemsToDelete, setItemsToDelete] = useState([]);
+
+  useEffect(() => {
+    if (itemsToDelete.length) {
+      let updatedGrid = [
+        ...grid
+      ];
+
+      itemsToDelete.forEach((el, i) => {
+        const [rowIndex, elementIndex] = el.split('-');
+        updatedGrid[rowIndex][elementIndex] = 0;
+      });
+
+      setTimeout(() => {
+        setGrid(updatedGrid);
+        setItemsToDelete([]);
+      }, 1500)
+    }
+  }, [itemsToDelete]);
 
   const clickHandler = e => {
+    setItemsToDelete([]);
     e.target.style.background = "yellow";
 
     setTimeout(() => {
@@ -31,6 +52,12 @@ function App() {
     updatedGrid[rowIndex] = updatedRow;
 
     setGrid(updatedGrid);
+
+    const deleteThese = checkFibonacci(updatedGrid);
+
+    if (deleteThese.length) {
+      setItemsToDelete(deleteThese);
+    }
   };
 
   const markup = grid.map((element, rowIndex) => Array.isArray(element) ?
@@ -43,7 +70,10 @@ function App() {
               key={`${rowIndex}-${elementIndex}`}
               id={`${rowIndex}-${elementIndex}`}
               onClick={clickHandler}
-              style={el > 0 ? { color: 'black' } : { color: 'white' }}
+              style={{
+                color: el > 0 && !itemsToDelete.includes(`${rowIndex}-${elementIndex}`)  ? 'black' : 'white',
+                background: itemsToDelete.includes(`${rowIndex}-${elementIndex}`) ? 'green' : 'white'
+              }}
             >
               {el}
             </div>

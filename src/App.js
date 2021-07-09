@@ -13,7 +13,7 @@ function App() {
 
   useEffect(() => {
     if (itemsToDelete.length) {
-      let updatedGrid = [
+      const updatedGrid = [
         ...grid
       ];
 

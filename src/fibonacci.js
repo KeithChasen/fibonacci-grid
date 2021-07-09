@@ -12,6 +12,8 @@ export const checkFibonacci = (updatedGrid) => {
 
     return deleteThese
   }
+
+  return [];
 };
 
 const collectCellNumbers = (updatedGrid) => {
